@@ -1,0 +1,69 @@
+name: Build and Release Test versions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Android release
+        run: flutter build apk --release
+
+      - name: Zip Web build
+        run: zip -r web_build.zip build/web
+
+      - name: Create MD5 checksums
+        run: |
+          md5sum build/app/outputs/flutter-apk/app-release.apk > app-release.apk.md5
+          md5sum web_build.zip > web_build.zip.md5
+
+      - name: Create SHA checksums
+        run: |
+          sha256sum build/app/outputs/flutter-apk/app-release.apk > app-release.apk.sha
+          sha256sum web_build.zip > web_build.zip.sha
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Android APK
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/app/outputs/flutter-apk/app-release.apk
+          asset_name: app-release-${{ github.run_number }}.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload Web ZIP
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: web_build.zip
+          asset_name: web_build-${{ github.run_number }}.zip
+          asset_content_type: application/zip
