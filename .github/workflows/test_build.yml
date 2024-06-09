@@ -33,12 +33,12 @@ jobs:
       - name: Create MD5 checksums
         run: |
           md5sum build/app/outputs/flutter-apk/app-release.apk > app-release.apk.md5
-          md5sum web_build.zip > web_build.zip.md5
+          md5sum build/web_build.zip > web_build.zip.md5
 
       - name: Create SHA checksums
         run: |
           sha256sum build/app/outputs/flutter-apk/app-release.apk > app-release.apk.sha
-          sha256sum web_build.zip > web_build.zip.sha
+          sha256sum build/web_build.zip > web_build.zip.sha
 
       - name: Create Release
         id: create_release
@@ -67,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: web_build.zip
+          asset_path: build/web_build.zip
           asset_name: web_build-${{ github.run_number }}.zip
           asset_content_type: application/zip
