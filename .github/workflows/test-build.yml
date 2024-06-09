@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_web:
+  build_and_release_web:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,14 +24,15 @@ jobs:
       - name: Build Web release
         run: flutter build web
 
-      - name: Deploy to Firebase Hosting test channel
-        uses: w9jds/firebase-action@master
+      - name: Host test build to firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting:test
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_FM_MAHANAMA_NEXTGEN }}
+          channelId: live
+          projectId: fm-mahanama-nextgen  
 
-  build_android:
+  build_and_release_android:
     runs-on: ubuntu-latest
 
     steps:
