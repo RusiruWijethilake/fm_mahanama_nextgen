@@ -27,18 +27,13 @@ jobs:
       - name: Build Web release
         run: flutter build web
 
-      - name: Zip Web build
-        run: cd build/web && zip -r ../web_build . && cd ../..
-
       - name: Create MD5 checksums
         run: |
           md5sum build/app/outputs/flutter-apk/app-release.apk > app-release.apk.md5
-          md5sum build/web_build.zip > web_build.zip.md5
 
       - name: Create SHA checksums
         run: |
           sha256sum build/app/outputs/flutter-apk/app-release.apk > app-release.apk.sha
-          sha256sum build/web_build.zip > web_build.zip.sha
 
       - name: Create Release
         id: create_release
@@ -70,3 +65,8 @@ jobs:
           asset_path: build/web_build.zip
           asset_name: web_build-${{ github.run_number }}.zip
           asset_content_type: application/zip
+
+      - name: Deploy to Firebase Hosting test channel
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:test
