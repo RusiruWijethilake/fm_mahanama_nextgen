@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "763886388979",
+    "project_id": "fm-mahanama-nextgen",
+    "storage_bucket": "fm-mahanama-nextgen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763886388979:android:5b22eb3dba9e5464065986",
+        "android_client_info": {
+          "package_name": "lk.com.rusiruwijethilake.fm_mahanama_nextgen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763886388979-4e605vrqkao0hsddguoamul2o88k4v7p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Lc3zjeuiGuwvN1yUNPwgzLouSy_ck98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763886388979-4e605vrqkao0hsddguoamul2o88k4v7p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763886388979-9f6fl6uledq4d9t8aes7e6c4uv5aueb8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lk.devlusion.fmMahanamaAppMobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
