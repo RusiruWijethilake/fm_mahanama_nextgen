@@ -34,6 +34,19 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "targets": {
+      "test": {
+        "hosting": {
+          "public": "build/web",
+          "rewrites": [
+            {
+              "source": "**",
+              "destination": "/index.html"
+            }
+          ]
+        }
+      }
+    }
   }
 }
