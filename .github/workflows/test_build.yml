@@ -56,16 +56,6 @@ jobs:
           asset_name: app-release-${{ github.run_number }}.apk
           asset_content_type: application/vnd.android.package-archive
 
-      - name: Upload Web ZIP
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web_build.zip
-          asset_name: web_build-${{ github.run_number }}.zip
-          asset_content_type: application/zip
-
       - name: Deploy to Firebase Hosting test channel
         uses: w9jds/firebase-action@master
         with:
