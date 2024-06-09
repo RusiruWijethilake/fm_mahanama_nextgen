@@ -28,7 +28,7 @@ jobs:
         run: flutter build web
 
       - name: Zip Web build
-        run: zip -r web_build.zip . -i build/web
+        run: cd build/web && zip -r ../web_build . && cd ../..
 
       - name: Create MD5 checksums
         run: |
